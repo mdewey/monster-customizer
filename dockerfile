@@ -8,6 +8,8 @@ COPY yarn.lock .
 RUN yarn install --production
 # Copy app files
 COPY . .
+
+
 # Build the app
 RUN yarn build
 
@@ -17,7 +19,5 @@ ENV NODE_ENV production
 # Copy built assets from builder
 COPY --from=builder /app/build /usr/share/nginx/html
 
-# Expose port
-EXPOSE $PORT
 # Start nginx
-CMD /bin/sh -c "envsubst '\$PORT' < /usr/share/nginx/html/default.conf.template > /usr/share/nginx/html/default.conf" && nginx -g 'daemon off;'
+CMD ["nginx", "-g", "daemon off;"]
