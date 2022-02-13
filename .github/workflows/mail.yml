@@ -1,0 +1,23 @@
+
+name: deploy-to-heroku
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+      
+  deploy:
+    name: Deploy to Heroku
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: Build, Push and Release a Docker container to Heroku. # Your custom step name
+        uses: gonuit/heroku-docker-deploy@v1.3.3 # GitHub action name (leave it as it is).
+        with:
+          email: ${{ secrets.ACCOUNT_EMAIL }}
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.APP_NAME }}
+          dockerfile_name: dockerfile
