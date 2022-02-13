@@ -20,4 +20,4 @@ COPY --from=builder /app/build /usr/share/nginx/html
 # Expose port
 EXPOSE $PORT
 # Start nginx
-CMD /bin/sh -c "envsubst '\$PORT' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf" && nginx -g 'daemon off;'
+CMD /bin/sh -c "envsubst '\$PORT' < /usr/share/nginx/html/default.conf.template > /usr/share/nginx/html/default.conf" && nginx -g 'daemon off;'
