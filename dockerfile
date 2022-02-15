@@ -3,21 +3,21 @@ ENV NODE_ENV production
 # Add a work directory
 WORKDIR /app
 # Cache and Install dependencies
-COPY package.json .
-COPY yarn.lock .
+COPY package.json yarn.lock ./
+
 RUN yarn install --production
 # Copy app files
-COPY . .
-
-
+COPY . ./
 # Build the app
 RUN yarn build
 
 # Bundle static assets with nginx
 FROM nginx:1.21.0-alpine as production
+
 ENV NODE_ENV production
 # Copy built assets from builder
 COPY --from=builder /app/build /usr/share/nginx/html
 
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 # Start nginx
-CMD ["nginx", "-g", "daemon off;"]
+CMD sed -i -e 's/$PORT/'"$PORT"'/g' /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'
