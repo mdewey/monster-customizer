@@ -1,12 +1,12 @@
 FROM node:14-alpine AS builder
-# ENV NODE_ENV production
+ENV NODE_ENV production
 # Add a work directory
 WORKDIR /app
 # Cache and Install dependencies
 COPY package.json yarn.lock ./
 
-# RUN yarn install --production
-RUN yarn install
+RUN yarn install --production
+# RUN yarn install
 # Copy app files
 COPY . ./
 # Build the app
