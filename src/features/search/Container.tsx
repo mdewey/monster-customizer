@@ -1,48 +1,55 @@
 import React, {useState, useCallback} from 'react';
 
 import {getSearchResults} from './search.api'
+import {  useAppDispatch } from '../../app/hooks';
+
+
+import {selectMonster, fetchCreatureBySlug} from '../data/app.splice'
 
 const Container = () => {
   const [search, setSearch] = useState('');
   const [results, setResults] = useState<Array<any>>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isSearchLoading, setIsSearchLoading] = useState(false);
+  const dispatch = useAppDispatch();
 
   const handleSearch = useCallback(async () => {
-    setIsLoading(true);
+    setIsSearchLoading(true);
 
    const resp = await getSearchResults(search);
    const json = await resp.json();
    console.log({json});
    setResults(json.results);
-   setIsLoading(false);
+   setIsSearchLoading(false);
   },[search]);
 
   const handleClick = (monster:any) =>{
     console.log({monster});
+    dispatch(selectMonster(monster));
+    console.log("firing fetchCreatureBySlug");
+    dispatch(fetchCreatureBySlug(monster.slug));
   }
 
   return (
     <>
-    <div>
+    <div className='search-bar'>
       <input
         type="text"
         placeholder="Search"
         onChange={(e) => {
-          console.log(e.target.value);
           setSearch(e.target.value);
         }}
         value={search}
       />
       <button onClick={handleSearch}>search</button>
     </div>
-    {isLoading ? (
+    {isSearchLoading ? (
       <div>Loading...</div>
     ) : (
-      <div>
+      <div className="results-list">
         {results.map((result,i) => (
           <div key={i}>
             <button onClick={() => handleClick(result)}>
-              {result.name}
+              {result.name} ({result.slug})
             </button>
           </div>
         ))}

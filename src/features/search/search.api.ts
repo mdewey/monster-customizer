@@ -9,8 +9,15 @@ const getSearchResults = async (needle:string) =>{
   return await fetch(`${API_URL}/api/Search?needle=${needle}`);
 }
 
+const getCreatureBySlug = async (slug:string) =>{
+  const resp =  await fetch(`${API_URL}/api/Monster/${slug}`);
+  return await resp.json();
+}
+
+
 export {
-  getSearchResults
+  getSearchResults,
+  getCreatureBySlug
 }
 
 
