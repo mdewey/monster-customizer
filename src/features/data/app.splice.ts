@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { getCreatureBySlug } from '../search/search.api';
+import { getCreatureBySlug } from '../Search/search.api';
 
 export interface AppState {
   selectedCreature: any;
@@ -9,7 +9,7 @@ export interface AppState {
 
 const initialState: AppState = {
   selectedCreature: {},
-  currentCreature: {}
+  currentCreature: null
 }
 
 // this is the dispatch, this is creating both the ACTION as well as the reducer 
