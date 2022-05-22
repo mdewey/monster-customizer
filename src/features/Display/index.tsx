@@ -1,5 +1,6 @@
 import React from 'react';
 import { useAppSelector } from '../../app/hooks';
+import Defenses from './components/Defenses';
 import Movement from './components/Movement';
 import Summary from './components/Summary';
 
@@ -15,7 +16,7 @@ function Display() {
     <div>
       <Summary summary={currentCreature.summary} url={currentCreature.fullLink} />
       <Movement movements={currentCreature.movements} />
-      <>defenses</>
+      <Defenses {...currentCreature.defenses} />
       <>base stats</>
       <>abilities</>
       <>attacks</>
