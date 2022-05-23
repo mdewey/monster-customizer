@@ -1,6 +1,8 @@
 import React from 'react';
 import { useAppSelector } from '../../app/hooks';
+import BaseStats from './components/BaseStats';
 import Defenses from './components/Defenses';
+import Gear from './components/Gear';
 import Movement from './components/Movement';
 import Summary from './components/Summary';
 
@@ -17,10 +19,10 @@ function Display() {
       <Summary summary={currentCreature.summary} url={currentCreature.fullLink} />
       <Movement movements={currentCreature.movements} />
       <Defenses {...currentCreature.defenses} />
-      <>base stats</>
+      <BaseStats {...currentCreature.baseStats} />
       <>abilities</>
       <>attacks</>
-      <>gear</>
+      <Gear {...currentCreature.gear} />
       <>spellLikeAbilities</>
     </div>
   );
